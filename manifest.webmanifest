@@ -1,0 +1,11 @@
+{
+  "name": "箱根駅伝予選会 LIVE",
+  "short_name": "箱根予選LIVE",
+  "description": "箱根駅伝予選会 リアルタイム順位計算",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f4f4",
+  "theme_color": "#111111",
+  "orientation": "portrait"
+}

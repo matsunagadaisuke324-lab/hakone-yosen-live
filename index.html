@@ -1,0 +1,3581 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
+
+<title>箱根駅伝予選会 LIVE</title>
+
+<!-- 検索エンジンに掲載させない -->
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="manifest" href="./manifest.webmanifest">
+
+<meta name="theme-color" content="#111111">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+>
+
+<meta
+    name="apple-mobile-web-app-title"
+    content="箱根予選LIVE"
+>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family:
+        Arial,
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 8px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+
+/* =========================
+   フィードバック
+========================= */
+
+#inputFeedback {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(-140px);
+
+    width: calc(100% - 20px);
+    max-width: 500px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    color: white;
+
+    font-weight: bold;
+
+    z-index: 9999;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,0.3);
+}
+
+#inputFeedback.show {
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+    opacity: 1;
+}
+
+.feedback-university {
+    background: #1976d2;
+}
+
+.feedback-pending {
+    background: #ef6c00;
+}
+
+.feedback-assigned {
+    background: #2e7d32;
+}
+
+.feedback-complete {
+    background: #008000;
+}
+
+.feedback-title {
+    font-size: 22px;
+}
+
+.feedback-time {
+    margin-top: 3px;
+    font-size: 16px;
+}
+
+
+/* =========================
+   タイマー
+========================= */
+
+.timer-area {
+    padding: 7px 10px 3px;
+}
+
+#timer {
+    font-size: 38px;
+    font-weight: bold;
+}
+
+#raceStatus {
+    font-size: 13px;
+    font-weight: bold;
+    color: #1976d2;
+}
+
+#saveStatus {
+    font-size: 11px;
+    color: #777;
+}
+
+
+/* =========================
+   共通
+========================= */
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    touch-action: manipulation;
+}
+
+
+/* =========================
+   操作
+========================= */
+
+.control-area {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 8px;
+}
+
+.control-button {
+    flex: 1;
+    max-width: 220px;
+    padding: 8px 3px;
+    color: white;
+    font-size: 13px;
+}
+
+.undo {
+    background: #666;
+}
+
+.reset {
+    background: #d32f2f;
+}
+
+
+/* =========================
+   メイン入力
+========================= */
+
+.main-input-area {
+    max-width: 700px;
+    margin: auto;
+    padding: 4px 6px 8px;
+}
+
+
+/* =========================
+   GOAL
+========================= */
+
+.goal-capture-area {
+    margin-bottom: 5px;
+}
+
+#goalCaptureButton {
+    width: 100%;
+    height: 62px;
+
+    background: #ff9800;
+    color: white;
+
+    font-size: 28px;
+
+    border: 3px solid #e65100;
+}
+
+#goalCaptureButton:active {
+    transform: scale(0.98);
+}
+
+#goalCaptureButton:disabled {
+    background: #bdbdbd;
+    border-color: #9e9e9e;
+}
+
+#pendingCount {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   スタート案内
+========================= */
+
+#startGuide {
+    margin: 4px 0;
+    padding: 6px;
+
+    background: #e3f2fd;
+
+    border: 1px solid #1976d2;
+    border-radius: 6px;
+
+    color: #0d47a1;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   大学ボタン
+========================= */
+
+.university-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 4px;
+}
+
+.university {
+    width: 100%;
+    height: 56px;
+
+    padding: 4px 2px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+
+    color: #111;
+}
+
+.university:active {
+    transform: scale(0.96);
+
+    background: #e3f2fd;
+}
+
+.university-name {
+    display: block;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+.university-count {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 17px;
+
+    color: #555;
+}
+
+.university-warning {
+    background: #fff3cd;
+
+    border: 2px solid #f9a825;
+}
+
+.university-complete {
+    background: #dff5e1;
+
+    border: 2px solid #43a047;
+}
+
+
+/* =========================
+   セクション
+========================= */
+
+section {
+    max-width: 900px;
+    margin: auto;
+}
+
+.section-title {
+    margin: 22px 10px 8px;
+    font-size: 21px;
+}
+
+
+/* =========================
+   未割当
+========================= */
+
+#pendingAssignmentArea {
+    padding: 0 8px;
+}
+
+#pendingGoalsList {
+    max-width: 800px;
+    margin: auto;
+}
+
+.pending-empty {
+    color: #777;
+
+    padding: 12px;
+
+    background: white;
+
+    border-radius: 8px;
+}
+
+.pending-goal {
+    background: #fff3e0;
+
+    border: 2px solid #ff9800;
+
+    border-radius: 8px;
+
+    padding: 10px;
+
+    margin-bottom: 7px;
+
+    text-align: left;
+}
+
+.pending-goal-time {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.pending-select {
+    width: 100%;
+
+    margin-top: 6px;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    border-radius: 6px;
+
+    border: 1px solid #aaa;
+
+    background: white;
+}
+
+
+/* =========================
+   ランキング
+========================= */
+
+#rankingArea {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 8px;
+}
+
+.completed-ranking,
+.progress-ranking {
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    margin-bottom: 15px;
+}
+
+.completed-item {
+    background: #e8f5e9;
+
+    border-left: 5px solid #43a047;
+
+    margin-bottom: 7px;
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    text-align: left;
+}
+
+.completed-position {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.completed-name {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.leader {
+    background: #fff8d5;
+    border-left-color: #f9a825;
+}
+
+.progress-item {
+    background: #f5f5f5;
+
+    border-left: 5px solid #90a4ae;
+
+    padding: 10px;
+
+    margin-bottom: 6px;
+
+    border-radius: 7px;
+
+    text-align: left;
+}
+
+.progress-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.progress-count {
+    float: right;
+
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   CSV
+========================= */
+
+.export-area {
+    max-width: 800px;
+
+    margin: 20px auto;
+
+    padding: 12px;
+
+    background: white;
+
+    border-radius: 10px;
+}
+
+.export-title {
+    margin: 0 0 10px;
+
+    font-size: 18px;
+}
+
+.export-buttons {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 8px;
+}
+
+.export-button {
+    min-height: 48px;
+
+    padding: 8px;
+
+    color: white;
+
+    font-size: 14px;
+}
+
+.export-history {
+    background: #1565c0;
+}
+
+.export-ranking {
+    background: #2e7d32;
+}
+
+
+/* =========================
+   履歴
+========================= */
+
+#historyArea {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 8px 30px;
+}
+
+.history-item {
+    background: white;
+
+    padding: 10px;
+
+    margin-bottom: 6px;
+
+    border-radius: 7px;
+
+    text-align: left;
+}
+
+.history-excluded {
+    opacity: 0.55;
+
+    border-left: 5px solid #999;
+}
+
+.finish-position {
+    display: inline-block;
+
+    min-width: 50px;
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.excluded-label {
+    display: inline-block;
+
+    margin-top: 5px;
+
+    padding: 3px 7px;
+
+    background: #777;
+
+    color: white;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   履歴修正
+========================= */
+
+.history-edit-button {
+    margin-top: 8px;
+
+    padding: 7px 12px;
+
+    background: #1976d2;
+
+    color: white;
+
+    font-size: 13px;
+}
+
+.history-edit-area {
+    margin-top: 8px;
+
+    padding: 8px;
+
+    background: #e3f2fd;
+
+    border-radius: 7px;
+}
+
+.history-edit-select {
+    width: 100%;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    background: white;
+
+    border: 1px solid #aaa;
+
+    border-radius: 6px;
+}
+
+.history-edit-controls {
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 7px;
+}
+
+.history-save-button {
+    flex: 1;
+
+    padding: 10px;
+
+    background: #43a047;
+
+    color: white;
+}
+
+.history-cancel-button {
+    flex: 1;
+
+    padding: 10px;
+
+    background: #757575;
+
+    color: white;
+}
+
+
+/* =========================
+   小型スマホ
+========================= */
+
+@media (max-height: 700px) {
+
+    header {
+        padding: 5px;
+    }
+
+    header h1 {
+        font-size: 16px;
+    }
+
+    .timer-area {
+        padding: 4px;
+    }
+
+    #timer {
+        font-size: 31px;
+    }
+
+    #saveStatus {
+        display: none;
+    }
+
+    #goalCaptureButton {
+        height: 54px;
+        font-size: 25px;
+    }
+
+    .university {
+        height: 49px;
+    }
+
+    .university-name {
+        font-size: 11px;
+    }
+
+    .university-count {
+        font-size: 15px;
+    }
+
+}
+
+
+/* =========================
+   PC
+========================= */
+
+@media (min-width: 800px) {
+
+    .university-grid {
+        grid-template-columns:
+            repeat(5, 1fr);
+    }
+
+    .university {
+        height: 70px;
+    }
+
+    .university-name {
+        font-size: 15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="inputFeedback">
+
+    <div
+        id="feedbackTitle"
+        class="feedback-title"
+    >
+    </div>
+
+    <div
+        id="feedbackTime"
+        class="feedback-time"
+    >
+    </div>
+
+</div>
+
+
+<header>
+
+<h1>
+箱根駅伝予選会 LIVE
+</h1>
+
+</header>
+
+
+<div class="timer-area">
+
+    <div id="timer">
+        00:00.0
+    </div>
+
+    <div id="raceStatus">
+        最初にゴールした大学をタップ
+    </div>
+
+    <div id="saveStatus">
+        自動保存：ON
+    </div>
+
+</div>
+
+
+<div class="control-area">
+
+    <button
+        class="control-button undo"
+        onclick="undoLast()"
+    >
+        ↩ 取り消し
+    </button>
+
+    <button
+        class="control-button reset"
+        onclick="resetRace()"
+    >
+        リセット
+    </button>
+
+</div>
+
+
+<div class="main-input-area">
+
+    <div class="goal-capture-area">
+
+        <button
+            id="goalCaptureButton"
+            onclick="captureGoal()"
+            disabled
+        >
+            🏃 GOAL
+        </button>
+
+        <div id="pendingCount">
+            未割当：0人
+        </div>
+
+    </div>
+
+
+    <div id="startGuide">
+        🏁 1着の大学を押すと計測開始
+    </div>
+
+
+    <div
+        id="universityButtons"
+        class="university-grid"
+    >
+    </div>
+
+</div>
+
+
+<section id="pendingAssignmentArea">
+
+<h2 class="section-title">
+🟠 未割当ゴール
+</h2>
+
+<div id="pendingGoalsList">
+</div>
+
+</section>
+
+
+<section>
+
+<h2 class="section-title">
+大学別速報
+</h2>
+
+<div id="rankingArea">
+</div>
+
+</section>
+
+
+<!-- =========================
+     CSV
+========================= -->
+
+<section>
+
+<div class="export-area">
+
+    <h2 class="export-title">
+        📥 CSV保存
+    </h2>
+
+    <div class="export-buttons">
+
+        <button
+            class="export-button export-history"
+            onclick="exportHistoryCSV()"
+        >
+            全ゴール履歴CSV
+        </button>
+
+        <button
+            class="export-button export-ranking"
+            onclick="exportRankingCSV()"
+        >
+            大学順位CSV
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<h2 class="section-title">
+ゴール履歴
+</h2>
+
+<div id="historyArea">
+</div>
+
+</section>
+
+
+<script>
+
+
+// ========================================
+// 大学
+// ========================================
+
+const universities = [
+
+    { full:"中央学院大学", short:"中央学院" },
+    { full:"順天堂大学", short:"順天堂" },
+    { full:"山梨学院大学", short:"山梨学院" },
+    { full:"日本大学", short:"日本" },
+    { full:"東海大学", short:"東海" },
+
+    { full:"東京農業大学", short:"東京農業" },
+    { full:"神奈川大学", short:"神奈川" },
+    { full:"大東文化大学", short:"大東文化" },
+    { full:"日本体育大学", short:"日本体育" },
+    { full:"立教大学", short:"立教" },
+
+    { full:"法政大学", short:"法政" },
+    { full:"明治大学", short:"明治" },
+    { full:"専修大学", short:"専修" },
+    { full:"日本薬科大学", short:"日本薬科" },
+    { full:"駿河台大学", short:"駿河台" }
+
+];
+
+
+const universityNames =
+    universities.map(
+        item => item.full
+    );
+
+
+const STORAGE_KEY =
+    "hakoneYosenLiveData";
+
+
+
+let raceStartTimestamp = null;
+
+let timerInterval = null;
+
+let results = [];
+
+let pendingGoals = [];
+
+let nextGoalId = 1;
+
+let editingGoalId = null;
+
+let feedbackTimer = null;
+
+
+
+// ========================================
+// フィードバック
+// ========================================
+
+function showFeedback(
+    title,
+    text,
+    type
+) {
+
+    const box =
+        document.getElementById(
+            "inputFeedback"
+        );
+
+
+    document.getElementById(
+        "feedbackTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "feedbackTime"
+    ).textContent =
+        text;
+
+
+    box.className = "";
+
+
+    if (type === "pending") {
+
+        box.classList.add(
+            "feedback-pending"
+        );
+
+    }
+
+    else if (
+        type === "complete"
+    ) {
+
+        box.classList.add(
+            "feedback-complete"
+        );
+
+    }
+
+    else if (
+        type === "assigned"
+    ) {
+
+        box.classList.add(
+            "feedback-assigned"
+        );
+
+    }
+
+    else {
+
+        box.classList.add(
+            "feedback-university"
+        );
+
+    }
+
+
+    void box.offsetWidth;
+
+
+    box.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        feedbackTimer
+    );
+
+
+    feedbackTimer =
+        setTimeout(
+            () =>
+                box.classList.remove(
+                    "show"
+                ),
+            1200
+        );
+
+}
+
+
+
+// ========================================
+// 時間
+// ========================================
+
+function getElapsedTime() {
+
+    if (
+        raceStartTimestamp === null
+    ) {
+
+        return 0;
+
+    }
+
+
+    return (
+        Date.now()
+        -
+        raceStartTimestamp
+    ) / 1000;
+
+}
+
+
+
+function updateTimer() {
+
+    if (
+        raceStartTimestamp === null
+    ) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "timer"
+    ).textContent =
+        formatTime(
+            getElapsedTime()
+        );
+
+}
+
+
+
+// ========================================
+// レース状態
+// ========================================
+
+function updateRaceStatus() {
+
+    const status =
+        document.getElementById(
+            "raceStatus"
+        );
+
+
+    const guide =
+        document.getElementById(
+            "startGuide"
+        );
+
+
+    const goal =
+        document.getElementById(
+            "goalCaptureButton"
+        );
+
+
+    if (
+        raceStartTimestamp === null
+    ) {
+
+        status.textContent =
+            "最初にゴールした大学をタップ";
+
+
+        guide.style.display =
+            "block";
+
+
+        goal.disabled =
+            true;
+
+    }
+
+    else {
+
+        status.textContent =
+            "🟢 計測中";
+
+
+        guide.style.display =
+            "none";
+
+
+        goal.disabled =
+            false;
+
+    }
+
+}
+
+
+
+// ========================================
+// 大学入力
+// ========================================
+
+function finish(
+    university
+) {
+
+
+    /*
+       通常ボタンは10人でロック。
+       後から未割当を割り当てることは可能。
+    */
+
+    if (
+        getUniversityCount(
+            university
+        ) >= 10
+    ) {
+
+        return;
+
+    }
+
+
+    // 1着
+
+    if (
+        raceStartTimestamp === null
+    ) {
+
+
+        raceStartTimestamp =
+            Date.now();
+
+
+        results.push({
+
+            id:
+                nextGoalId++,
+
+            university:
+                university,
+
+            time:
+                0
+
+        });
+
+
+        timerInterval =
+            setInterval(
+                updateTimer,
+                50
+            );
+
+
+        recalculateUniversityCounts();
+
+        saveData();
+
+        updateAllDisplays();
+
+
+        showFeedback(
+            getShortName(
+                university
+            ) +
+            " 1人目",
+
+            "🏁 1着 +00:00.0",
+
+            "university"
+        );
+
+
+        return;
+
+    }
+
+
+    const elapsed =
+        getElapsedTime();
+
+
+    const record = {
+
+        id:
+            nextGoalId++,
+
+        university:
+            university,
+
+        time:
+            elapsed
+
+    };
+
+
+    results.push(
+        record
+    );
+
+
+    recalculateUniversityCounts();
+
+    saveData();
+
+    updateAllDisplays();
+
+
+    if (
+        record.count === 10
+    ) {
+
+        showFeedback(
+            "✅ " +
+            getShortName(
+                university
+            ) +
+            " 10人到達",
+
+            "上位10人を集計",
+
+            "complete"
+        );
+
+    }
+
+    else {
+
+        showFeedback(
+            getShortName(
+                university
+            ) +
+            " " +
+            record.count +
+            "人目",
+
+            "+" +
+            formatTime(
+                elapsed
+            ),
+
+            "university"
+        );
+
+    }
+
+}
+
+
+
+// ========================================
+// GOAL
+// ========================================
+
+function captureGoal() {
+
+
+    if (
+        raceStartTimestamp === null
+    ) {
+
+        return;
+
+    }
+
+
+    const elapsed =
+        getElapsedTime();
+
+
+    pendingGoals.push({
+
+        id:
+            nextGoalId++,
+
+        time:
+            elapsed
+
+    });
+
+
+    saveData();
+
+    updateAllDisplays();
+
+
+    showFeedback(
+        "🟠 未割当",
+
+        "+" +
+        formatTime(
+            elapsed
+        ),
+
+        "pending"
+    );
+
+}
+
+
+
+// ========================================
+// 未割当表示
+// ========================================
+
+function updatePendingDisplay() {
+
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent =
+        "未割当：" +
+        pendingGoals.length +
+        "人";
+
+
+    const list =
+        document.getElementById(
+            "pendingGoalsList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        pendingGoals.length === 0
+    ) {
+
+        list.innerHTML =
+            `
+            <div class="pending-empty">
+                現在、未割当はありません。
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    const sorted =
+        pendingGoals
+            .slice()
+            .sort(
+                compareGoals
+            );
+
+
+    sorted.forEach(
+        (goal, index) => {
+
+
+            const box =
+                document.createElement(
+                    "div"
+                );
+
+
+            box.className =
+                "pending-goal";
+
+
+            const title =
+                document.createElement(
+                    "div"
+                );
+
+
+            title.className =
+                "pending-goal-time";
+
+
+            title.textContent =
+                "未割当 " +
+                (index + 1) +
+                "人目　+" +
+                formatTime(
+                    goal.time
+                );
+
+
+            box.appendChild(
+                title
+            );
+
+
+            const select =
+                document.createElement(
+                    "select"
+                );
+
+
+            select.className =
+                "pending-select";
+
+
+            const blank =
+                document.createElement(
+                    "option"
+                );
+
+
+            blank.value = "";
+
+            blank.textContent =
+                "▼ 大学を選択";
+
+
+            select.appendChild(
+                blank
+            );
+
+
+            universityNames.forEach(
+                university => {
+
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    const count =
+                        getUniversityCount(
+                            university
+                        );
+
+
+                    option.value =
+                        university;
+
+
+                    option.textContent =
+                        university +
+                        "（現在" +
+                        count +
+                        "人）";
+
+
+                    select.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+
+            select.onchange =
+                function () {
+
+
+                    if (
+                        !select.value
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    assignPendingGoal(
+                        goal.id,
+                        select.value
+                    );
+
+                };
+
+
+            box.appendChild(
+                select
+            );
+
+
+            list.appendChild(
+                box
+            );
+
+        }
+    );
+
+}
+
+
+
+// ========================================
+// 未割当を大学へ割当
+// ========================================
+
+function assignPendingGoal(
+    goalId,
+    university
+) {
+
+
+    const index =
+        pendingGoals.findIndex(
+            item =>
+                item.id === goalId
+        );
+
+
+    if (
+        index === -1
+    ) {
+
+        return;
+
+    }
+
+
+    const goal =
+        pendingGoals[
+            index
+        ];
+
+
+    const record = {
+
+        id:
+            goal.id,
+
+        university:
+            university,
+
+        time:
+            goal.time
+
+    };
+
+
+    results.push(
+        record
+    );
+
+
+    pendingGoals.splice(
+        index,
+        1
+    );
+
+
+    recalculateUniversityCounts();
+
+    saveData();
+
+    updateAllDisplays();
+
+
+    if (
+        record.scoring
+    ) {
+
+        showFeedback(
+            "✓ " +
+            getShortName(
+                university
+            ) +
+            " " +
+            record.count +
+            "人目",
+
+            "+" +
+            formatTime(
+                goal.time
+            ) +
+            "　集計対象",
+
+            record.count === 10
+                ?
+                "complete"
+                :
+                "assigned"
+        );
+
+    }
+
+    else {
+
+        showFeedback(
+            getShortName(
+                university
+            ) +
+            " " +
+            record.count +
+            "人目",
+
+            "上位10人の集計対象外",
+
+            "pending"
+        );
+
+    }
+
+}
+
+
+
+// ========================================
+// 大学名
+// ========================================
+
+function getShortName(
+    full
+) {
+
+    const item =
+        universities.find(
+            university =>
+                university.full === full
+        );
+
+
+    return item
+        ?
+        item.short
+        :
+        full;
+
+}
+
+
+
+// ========================================
+// 登録人数
+// ========================================
+
+function getUniversityCount(
+    university
+) {
+
+    return results.filter(
+        item =>
+            item.university ===
+            university
+    ).length;
+
+}
+
+
+
+// ========================================
+// ゴール順
+// ========================================
+
+function compareGoals(
+    a,
+    b
+) {
+
+    if (
+        a.time !== b.time
+    ) {
+
+        return (
+            a.time -
+            b.time
+        );
+
+    }
+
+
+    return (
+        a.id -
+        b.id
+    );
+
+}
+
+
+
+// ========================================
+// 大学内順位を再計算
+// ========================================
+
+function recalculateUniversityCounts() {
+
+
+    const sorted =
+        results
+            .slice()
+            .sort(
+                compareGoals
+            );
+
+
+    const counts = {};
+
+
+    sorted.forEach(
+        item => {
+
+
+            if (
+                !counts[
+                    item.university
+                ]
+            ) {
+
+                counts[
+                    item.university
+                ] = 0;
+
+            }
+
+
+            counts[
+                item.university
+            ]++;
+
+
+            item.count =
+                counts[
+                    item.university
+                ];
+
+
+            item.scoring =
+                item.count <= 10;
+
+        }
+    );
+
+}
+
+
+
+// ========================================
+// 大学ボタン
+// ========================================
+
+function createUniversityButtons() {
+
+
+    const area =
+        document.getElementById(
+            "universityButtons"
+        );
+
+
+    area.innerHTML = "";
+
+
+    universities.forEach(
+        university => {
+
+
+            const count =
+                getUniversityCount(
+                    university.full
+                );
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "university";
+
+
+            if (
+                count === 9
+            ) {
+
+                button.classList.add(
+                    "university-warning"
+                );
+
+            }
+
+
+            if (
+                count >= 10
+            ) {
+
+                button.classList.add(
+                    "university-complete"
+                );
+
+
+                /*
+                   通常入力のみロック
+                */
+
+                button.disabled =
+                    true;
+
+            }
+
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+
+            name.className =
+                "university-name";
+
+
+            name.textContent =
+                university.short;
+
+
+            const countText =
+                document.createElement(
+                    "span"
+                );
+
+
+            countText.className =
+                "university-count";
+
+
+            if (
+                count >= 10
+            ) {
+
+                countText.textContent =
+                    "✓ 10/10";
+
+            }
+
+            else if (
+                count === 9
+            ) {
+
+                countText.textContent =
+                    "⚠ 9/10";
+
+            }
+
+            else {
+
+                countText.textContent =
+                    count +
+                    "/10";
+
+            }
+
+
+            button.appendChild(
+                name
+            );
+
+
+            button.appendChild(
+                countText
+            );
+
+
+            button.onclick =
+                () =>
+                    finish(
+                        university.full
+                    );
+
+
+            area.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+
+// ========================================
+// 大学集計
+// ========================================
+
+function getUniversityData() {
+
+
+    const data = {};
+
+
+    universityNames.forEach(
+        university => {
+
+
+            data[
+                university
+            ] = {
+
+                registered:
+                    0,
+
+                scoringCount:
+                    0,
+
+                total:
+                    0
+
+            };
+
+        }
+    );
+
+
+    results.forEach(
+        item => {
+
+
+            const team =
+                data[
+                    item.university
+                ];
+
+
+            if (!team) {
+
+                return;
+
+            }
+
+
+            team.registered++;
+
+
+            if (
+                item.scoring
+            ) {
+
+                team.scoringCount++;
+
+                team.total +=
+                    item.time;
+
+            }
+
+        }
+    );
+
+
+    return data;
+
+}
+
+
+
+// ========================================
+// ランキングデータ取得
+// ========================================
+
+function getCompletedRanking() {
+
+
+    return Object.entries(
+        getUniversityData()
+    )
+    .filter(
+        item =>
+            item[1].scoringCount === 10
+    )
+    .sort(
+        (a,b) =>
+            a[1].total -
+            b[1].total
+    );
+
+}
+
+
+
+// ========================================
+// ランキング表示
+// ========================================
+
+function showRanking() {
+
+
+    const area =
+        document.getElementById(
+            "rankingArea"
+        );
+
+
+    const all =
+        Object.entries(
+            getUniversityData()
+        );
+
+
+    const completed =
+        all
+            .filter(
+                item =>
+                    item[1]
+                        .scoringCount ===
+                    10
+            )
+            .sort(
+                (a,b) =>
+                    a[1].total -
+                    b[1].total
+            );
+
+
+    const progress =
+        all
+            .filter(
+                item =>
+                    item[1]
+                        .scoringCount <
+                    10
+            )
+            .sort(
+                (a,b) => {
+
+                    if (
+                        a[1].scoringCount !==
+                        b[1].scoringCount
+                    ) {
+
+                        return (
+                            b[1].scoringCount -
+                            a[1].scoringCount
+                        );
+
+                    }
+
+                    return (
+                        a[1].total -
+                        b[1].total
+                    );
+
+                }
+            );
+
+
+    let html =
+        `
+        <div class="completed-ranking">
+
+        <h2>
+        🏆 10人集計済み
+        </h2>
+        `;
+
+
+    if (
+        completed.length === 0
+    ) {
+
+        html +=
+            `
+            <p>
+            まだ10人到達した大学はありません。
+            </p>
+            `;
+
+    }
+
+    else {
+
+
+        const leader =
+            completed[0][1].total;
+
+
+        completed.forEach(
+            (entry,index) => {
+
+
+                const name =
+                    entry[0];
+
+
+                const data =
+                    entry[1];
+
+
+                html +=
+                    `
+                    <div
+                        class="
+                        completed-item
+                        ${
+                            index === 0
+                            ?
+                            "leader"
+                            :
+                            ""
+                        }
+                        "
+                    >
+
+                    <span
+                        class="completed-position"
+                    >
+                    ${index + 1}位
+                    </span>
+
+                    <span
+                        class="completed-name"
+                    >
+                    ${name}
+                    </span>
+
+                    <br><br>
+
+                    上位10人累計差：
+
+                    <strong>
+                    ${formatTime(
+                        data.total
+                    )}
+                    </strong>
+
+                    <br>
+
+                    登録：
+                    ${data.registered}人
+
+                    <br>
+
+                    首位との差：
+
+                    <strong>
+
+                    ${
+                        index === 0
+                        ?
+                        "0.0秒"
+                        :
+                        "+" +
+                        formatGap(
+                            data.total -
+                            leader
+                        )
+                    }
+
+                    </strong>
+
+                    </div>
+                    `;
+
+            }
+        );
+
+    }
+
+
+    html +=
+        "</div>";
+
+
+    html +=
+        `
+        <div class="progress-ranking">
+
+        <h2>
+        ⏱ 集計中
+        </h2>
+        `;
+
+
+    progress.forEach(
+        entry => {
+
+
+            html +=
+                `
+                <div class="progress-item">
+
+                <span class="progress-name">
+                ${entry[0]}
+                </span>
+
+                <span class="progress-count">
+                ${entry[1].scoringCount}/10
+                </span>
+
+                <div style="clear:both;">
+                </div>
+
+                </div>
+                `;
+
+        }
+    );
+
+
+    html +=
+        "</div>";
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+
+// ========================================
+// 履歴
+// ========================================
+
+function showHistory() {
+
+
+    const area =
+        document.getElementById(
+            "historyArea"
+        );
+
+
+    if (
+        results.length === 0
+    ) {
+
+        area.innerHTML =
+            "まだ記録がありません";
+
+        return;
+
+    }
+
+
+    const sorted =
+        results
+            .slice()
+            .sort(
+                compareGoals
+            );
+
+
+    let html = "";
+
+
+    sorted.forEach(
+        (item,index) => {
+
+
+            html +=
+                `
+                <div
+                    class="
+                    history-item
+                    ${
+                        item.scoring
+                        ?
+                        ""
+                        :
+                        "history-excluded"
+                    }
+                    "
+                >
+
+                <span
+                    class="finish-position"
+                >
+                ${index + 1}着
+                </span>
+
+                <strong>
+                ${item.university}
+                </strong>
+
+                （大学${item.count}人目）
+
+                <br>
+
+                先頭との差：
+
+                <strong>
+                +${formatTime(
+                    item.time
+                )}
+                </strong>
+                `;
+
+
+            if (
+                !item.scoring
+            ) {
+
+                html +=
+                    `
+                    <br>
+
+                    <span
+                        class="excluded-label"
+                    >
+                    集計対象外
+                    </span>
+                    `;
+
+            }
+
+
+            if (
+                editingGoalId !==
+                item.id
+            ) {
+
+                html +=
+                    `
+                    <br>
+
+                    <button
+                        class="history-edit-button"
+                        onclick="startEditGoal(${item.id})"
+                    >
+                    ✏️ 大学を修正
+                    </button>
+                    `;
+
+            }
+
+            else {
+
+                html +=
+                    `
+                    <div
+                        class="history-edit-area"
+                    >
+
+                    <select
+                        id="editUniversity-${item.id}"
+                        class="history-edit-select"
+                    >
+                    `;
+
+
+                universityNames.forEach(
+                    university => {
+
+
+                        html +=
+                            `
+                            <option
+                                value="${university}"
+
+                                ${
+                                    university ===
+                                    item.university
+                                    ?
+                                    "selected"
+                                    :
+                                    ""
+                                }
+                            >
+
+                            ${university}
+
+                            </option>
+                            `;
+
+                    }
+                );
+
+
+                html +=
+                    `
+                    </select>
+
+                    <div
+                        class="history-edit-controls"
+                    >
+
+                    <button
+                        class="history-save-button"
+                        onclick="saveGoalEdit(${item.id})"
+                    >
+                    ✓ 変更
+                    </button>
+
+                    <button
+                        class="history-cancel-button"
+                        onclick="cancelGoalEdit()"
+                    >
+                    キャンセル
+                    </button>
+
+                    </div>
+
+                    </div>
+                    `;
+
+            }
+
+
+            html +=
+                "</div>";
+
+        }
+    );
+
+
+    area.innerHTML =
+        html;
+
+}
+
+
+
+// ========================================
+// 履歴修正
+// ========================================
+
+function startEditGoal(
+    id
+) {
+
+    editingGoalId = id;
+
+    showHistory();
+
+}
+
+
+
+function cancelGoalEdit() {
+
+    editingGoalId = null;
+
+    showHistory();
+
+}
+
+
+
+function saveGoalEdit(
+    id
+) {
+
+
+    const item =
+        results.find(
+            result =>
+                result.id === id
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const select =
+        document.getElementById(
+            "editUniversity-" +
+            id
+        );
+
+
+    const oldUniversity =
+        item.university;
+
+
+    item.university =
+        select.value;
+
+
+    editingGoalId =
+        null;
+
+
+    recalculateUniversityCounts();
+
+    saveData();
+
+    updateAllDisplays();
+
+
+    showFeedback(
+        "✏️ 修正完了",
+
+        getShortName(
+            oldUniversity
+        )
+        +
+        " → "
+        +
+        getShortName(
+            item.university
+        ),
+
+        "assigned"
+    );
+
+}
+
+
+
+// ========================================
+// CSV共通
+// ========================================
+
+function escapeCSV(
+    value
+) {
+
+
+    const text =
+        String(
+            value ?? ""
+        );
+
+
+    return (
+        '"' +
+        text.replace(
+            /"/g,
+            '""'
+        ) +
+        '"'
+    );
+
+}
+
+
+
+function downloadCSV(
+    filename,
+    rows
+) {
+
+
+    const csv =
+        rows
+            .map(
+                row =>
+                    row
+                        .map(
+                            escapeCSV
+                        )
+                        .join(",")
+            )
+            .join("\r\n");
+
+
+    /*
+       BOMを付けることで
+       Excelで日本語が文字化けしにくくする
+    */
+
+    const bom =
+        "\uFEFF";
+
+
+    const blob =
+        new Blob(
+            [
+                bom +
+                csv
+            ],
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+
+// ========================================
+// 全ゴール履歴CSV
+// ========================================
+
+function exportHistoryCSV() {
+
+
+    if (
+        results.length === 0 &&
+        pendingGoals.length === 0
+    ) {
+
+        alert(
+            "保存する記録がありません。"
+        );
+
+        return;
+
+    }
+
+
+    recalculateUniversityCounts();
+
+
+    const rows = [
+
+        [
+            "全体着順",
+            "大学",
+            "大学内順位",
+            "先頭との差(秒)",
+            "先頭との差",
+            "集計対象",
+            "記録ID"
+        ]
+
+    ];
+
+
+    /*
+       割当済み＋未割当を
+       実際のゴール時間順に統合
+    */
+
+    const allGoals = [
+
+        ...results.map(
+            item => ({
+
+                id:
+                    item.id,
+
+                time:
+                    item.time,
+
+                university:
+                    item.university,
+
+                count:
+                    item.count,
+
+                scoring:
+                    item.scoring,
+
+                assigned:
+                    true
+
+            })
+        ),
+
+
+        ...pendingGoals.map(
+            item => ({
+
+                id:
+                    item.id,
+
+                time:
+                    item.time,
+
+                university:
+                    "",
+
+                count:
+                    "",
+
+                scoring:
+                    false,
+
+                assigned:
+                    false
+
+            })
+        )
+
+    ]
+    .sort(
+        compareGoals
+    );
+
+
+    allGoals.forEach(
+        (item,index) => {
+
+
+            rows.push([
+
+                index + 1,
+
+                item.assigned
+                    ?
+                    item.university
+                    :
+                    "未割当",
+
+                item.assigned
+                    ?
+                    item.count
+                    :
+                    "",
+
+                item.time.toFixed(1),
+
+                "+" +
+                formatTime(
+                    item.time
+                ),
+
+                item.assigned
+                    ?
+                    (
+                        item.scoring
+                        ?
+                        "対象"
+                        :
+                        "対象外"
+                    )
+                    :
+                    "未判定",
+
+                item.id
+
+            ]);
+
+        }
+    );
+
+
+    downloadCSV(
+        createCSVFilename(
+            "全ゴール履歴"
+        ),
+        rows
+    );
+
+
+    showFeedback(
+        "📥 CSV保存",
+        "全ゴール履歴を保存しました",
+        "assigned"
+    );
+
+}
+
+
+
+// ========================================
+// 大学順位CSV
+// ========================================
+
+function exportRankingCSV() {
+
+
+    recalculateUniversityCounts();
+
+
+    const data =
+        getUniversityData();
+
+
+    const completed =
+        Object.entries(
+            data
+        )
+        .filter(
+            item =>
+                item[1].scoringCount ===
+                10
+        )
+        .sort(
+            (a,b) =>
+                a[1].total -
+                b[1].total
+        );
+
+
+    const progress =
+        Object.entries(
+            data
+        )
+        .filter(
+            item =>
+                item[1].scoringCount <
+                10
+        )
+        .sort(
+            (a,b) => {
+
+
+                if (
+                    a[1].scoringCount !==
+                    b[1].scoringCount
+                ) {
+
+                    return (
+                        b[1].scoringCount -
+                        a[1].scoringCount
+                    );
+
+                }
+
+
+                return (
+                    a[1].total -
+                    b[1].total
+                );
+
+            }
+        );
+
+
+    const rows = [
+
+        [
+            "速報順位",
+            "大学",
+            "状態",
+            "登録人数",
+            "集計人数",
+            "上位10人累計差(秒)",
+            "上位10人累計差",
+            "首位との差(秒)",
+            "首位との差"
+        ]
+
+    ];
+
+
+    let leaderTotal =
+        null;
+
+
+    if (
+        completed.length > 0
+    ) {
+
+        leaderTotal =
+            completed[0][1].total;
+
+    }
+
+
+    completed.forEach(
+        (entry,index) => {
+
+
+            const university =
+                entry[0];
+
+
+            const team =
+                entry[1];
+
+
+            const gap =
+                team.total -
+                leaderTotal;
+
+
+            rows.push([
+
+                index + 1,
+
+                university,
+
+                "10人集計済み",
+
+                team.registered,
+
+                team.scoringCount,
+
+                team.total.toFixed(1),
+
+                formatTime(
+                    team.total
+                ),
+
+                gap.toFixed(1),
+
+                formatGap(
+                    gap
+                )
+
+            ]);
+
+        }
+    );
+
+
+    /*
+       10人未満は順位確定扱いにせず
+       集計中として出力
+    */
+
+    progress.forEach(
+        entry => {
+
+
+            const university =
+                entry[0];
+
+
+            const team =
+                entry[1];
+
+
+            rows.push([
+
+                "",
+
+                university,
+
+                "集計中",
+
+                team.registered,
+
+                team.scoringCount,
+
+                "",
+
+                "",
+
+                "",
+
+                ""
+
+            ]);
+
+        }
+    );
+
+
+    downloadCSV(
+        createCSVFilename(
+            "大学順位"
+        ),
+        rows
+    );
+
+
+    showFeedback(
+        "📥 CSV保存",
+        "大学順位を保存しました",
+        "assigned"
+    );
+
+}
+
+
+
+// ========================================
+// CSVファイル名
+// ========================================
+
+function createCSVFilename(
+    type
+) {
+
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const hour =
+        String(
+            now.getHours()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const minute =
+        String(
+            now.getMinutes()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const second =
+        String(
+            now.getSeconds()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        "箱根駅伝予選会_" +
+        type +
+        "_" +
+        year +
+        month +
+        day +
+        "_" +
+        hour +
+        minute +
+        second +
+        ".csv"
+    );
+
+}
+
+
+
+// ========================================
+// 全更新
+// ========================================
+
+function updateAllDisplays() {
+
+    recalculateUniversityCounts();
+
+    updateRaceStatus();
+
+    updatePendingDisplay();
+
+    createUniversityButtons();
+
+    showRanking();
+
+    showHistory();
+
+}
+
+
+
+// ========================================
+// 取り消し
+// ========================================
+
+function undoLast() {
+
+
+    const all = [
+
+        ...results.map(
+            item => ({
+                ...item,
+                type:"result"
+            })
+        ),
+
+        ...pendingGoals.map(
+            item => ({
+                ...item,
+                type:"pending"
+            })
+        )
+
+    ];
+
+
+    if (
+        all.length === 0
+    ) {
+
+        alert(
+            "取り消す記録がありません。"
+        );
+
+        return;
+
+    }
+
+
+    const latest =
+        all.reduce(
+            (a,b) =>
+                a.id > b.id
+                ?
+                a
+                :
+                b
+        );
+
+
+    if (
+        latest.type ===
+        "pending"
+    ) {
+
+        pendingGoals =
+            pendingGoals.filter(
+                item =>
+                    item.id !==
+                    latest.id
+            );
+
+    }
+
+    else {
+
+        results =
+            results.filter(
+                item =>
+                    item.id !==
+                    latest.id
+            );
+
+    }
+
+
+    editingGoalId =
+        null;
+
+
+    if (
+        results.length === 0 &&
+        pendingGoals.length === 0
+    ) {
+
+        clearInterval(
+            timerInterval
+        );
+
+
+        raceStartTimestamp =
+            null;
+
+
+        timerInterval =
+            null;
+
+
+        nextGoalId =
+            1;
+
+
+        document.getElementById(
+            "timer"
+        ).textContent =
+            "00:00.0";
+
+    }
+
+
+    saveData();
+
+    updateAllDisplays();
+
+}
+
+
+
+// ========================================
+// 保存
+// ========================================
+
+function saveData() {
+
+
+    const data = {
+
+        raceStartTimestamp,
+
+        results,
+
+        pendingGoals,
+
+        nextGoalId
+
+    };
+
+
+    try {
+
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(
+                data
+            )
+        );
+
+
+        document.getElementById(
+            "saveStatus"
+        ).textContent =
+            "保存済み " +
+            new Date()
+                .toLocaleTimeString();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+
+// ========================================
+// 読込
+// ========================================
+
+function loadData() {
+
+
+    try {
+
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (!saved) {
+
+            return;
+
+        }
+
+
+        const data =
+            JSON.parse(
+                saved
+            );
+
+
+        raceStartTimestamp =
+            data.raceStartTimestamp
+            ??
+            null;
+
+
+        results =
+            Array.isArray(
+                data.results
+            )
+            ?
+            data.results
+            :
+            [];
+
+
+        pendingGoals =
+            Array.isArray(
+                data.pendingGoals
+            )
+            ?
+            data.pendingGoals
+            :
+            [];
+
+
+        nextGoalId =
+            data.nextGoalId
+            ??
+            1;
+
+
+        recalculateUniversityCounts();
+
+    }
+
+    catch(error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+
+// ========================================
+// リセット
+// ========================================
+
+function resetRace() {
+
+
+    if (
+        !confirm(
+            "すべて削除して最初からやり直しますか？"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    results = [];
+
+    pendingGoals = [];
+
+    nextGoalId = 1;
+
+    editingGoalId = null;
+
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    raceStartTimestamp = null;
+
+    timerInterval = null;
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    document.getElementById(
+        "timer"
+    ).textContent =
+        "00:00.0";
+
+
+    document.getElementById(
+        "saveStatus"
+    ).textContent =
+        "自動保存：ON";
+
+
+    updateAllDisplays();
+
+}
+
+
+
+// ========================================
+// 時間表示
+// ========================================
+
+function formatTime(
+    seconds
+) {
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    const remaining =
+        seconds % 60;
+
+
+    return (
+        String(
+            minutes
+        ).padStart(
+            2,
+            "0"
+        )
+        +
+        ":"
+        +
+        remaining
+            .toFixed(1)
+            .padStart(
+                4,
+                "0"
+            )
+    );
+
+}
+
+
+
+function formatGap(
+    seconds
+) {
+
+
+    if (
+        seconds < 60
+    ) {
+
+        return (
+            seconds.toFixed(1)
+            +
+            "秒"
+        );
+
+    }
+
+
+    return (
+        Math.floor(
+            seconds / 60
+        )
+        +
+        "分"
+        +
+        (
+            seconds % 60
+        ).toFixed(1)
+        +
+        "秒"
+    );
+
+}
+
+
+
+// ========================================
+// 起動
+// ========================================
+
+loadData();
+
+updateAllDisplays();
+
+
+if (
+    raceStartTimestamp !== null
+) {
+
+    timerInterval =
+        setInterval(
+            updateTimer,
+            50
+        );
+
+
+    updateTimer();
+
+}
+
+// ========================================
+// Service Worker
+// ========================================
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            navigator.serviceWorker
+                .register("./sw.js")
+                .then(function () {
+
+                    console.log(
+                        "Service Worker 登録成功"
+                    );
+
+                })
+                .catch(function (error) {
+
+                    console.error(
+                        "Service Worker 登録失敗",
+                        error
+                    );
+
+                });
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>
