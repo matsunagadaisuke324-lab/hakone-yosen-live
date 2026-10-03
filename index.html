@@ -10,15 +10,13 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 >
 
-<title>箱根駅伝予選会 LIVE</title>
+<title>予選会集計ツール</title>
 
-<!-- 検索エンジンに掲載させない -->
 <meta
     name="robots"
     content="noindex, nofollow"
 >
 
-<!-- PWA -->
 <link
     rel="manifest"
     href="./manifest.webmanifest"
@@ -41,10 +39,9 @@
 
 <meta
     name="apple-mobile-web-app-title"
-    content="箱根予選LIVE"
+    content="予選会集計ツール"
 >
 
-<!-- iPhoneホーム画面アイコン -->
 <link
     rel="apple-touch-icon"
     href="./icon-512.png"
@@ -73,15 +70,12 @@ body {
 
 header {
     background: #061f4a;
-
     color: white;
-
     padding: 8px;
 }
 
 header h1 {
     margin: 0;
-
     font-size: 18px;
 }
 
@@ -129,7 +123,6 @@ header h1 {
         rgba(0,0,0,0.3);
 }
 
-
 #inputFeedback.show {
 
     transform:
@@ -138,7 +131,6 @@ header h1 {
 
     opacity: 1;
 }
-
 
 .feedback-university {
     background: #1976d2;
@@ -156,13 +148,16 @@ header h1 {
     background: #008000;
 }
 
+.feedback-delete {
+    background: #c62828;
+}
+
 .feedback-title {
     font-size: 22px;
 }
 
 .feedback-time {
     margin-top: 3px;
-
     font-size: 16px;
 }
 
@@ -177,21 +172,17 @@ header h1 {
 
 #timer {
     font-size: 38px;
-
     font-weight: bold;
 }
 
 #raceStatus {
     font-size: 13px;
-
     font-weight: bold;
-
     color: #1976d2;
 }
 
 #saveStatus {
     font-size: 11px;
-
     color: #777;
 }
 
@@ -228,7 +219,6 @@ button {
 
     padding: 5px 8px;
 }
-
 
 .control-button {
 
@@ -274,7 +264,6 @@ button {
     margin-bottom: 5px;
 }
 
-
 #goalCaptureButton {
 
     width: 100%;
@@ -290,11 +279,9 @@ button {
     border: 3px solid #e65100;
 }
 
-
 #goalCaptureButton:active {
     transform: scale(0.98);
 }
-
 
 #goalCaptureButton:disabled {
 
@@ -302,7 +289,6 @@ button {
 
     border-color: #9e9e9e;
 }
-
 
 #pendingCount {
 
@@ -352,7 +338,6 @@ button {
     gap: 4px;
 }
 
-
 .university {
 
     width: 100%;
@@ -368,14 +353,12 @@ button {
     color: #111;
 }
 
-
 .university:active {
 
     transform: scale(0.96);
 
     background: #e3f2fd;
 }
-
 
 .university-name {
 
@@ -385,7 +368,6 @@ button {
 
     white-space: nowrap;
 }
-
 
 .university-count {
 
@@ -398,14 +380,12 @@ button {
     color: #555;
 }
 
-
 .university-warning {
 
     background: #fff3cd;
 
     border: 2px solid #f9a825;
 }
-
 
 .university-complete {
 
@@ -426,7 +406,6 @@ section {
     margin: auto;
 }
 
-
 .section-title {
 
     margin: 22px 10px 8px;
@@ -443,14 +422,12 @@ section {
     padding: 0 8px;
 }
 
-
 #pendingGoalsList {
 
     max-width: 800px;
 
     margin: auto;
 }
-
 
 .pending-empty {
 
@@ -462,7 +439,6 @@ section {
 
     border-radius: 8px;
 }
-
 
 .pending-goal {
 
@@ -479,14 +455,12 @@ section {
     text-align: left;
 }
 
-
 .pending-goal-time {
 
     font-size: 19px;
 
     font-weight: bold;
 }
-
 
 .pending-select {
 
@@ -519,7 +493,6 @@ section {
     padding: 0 8px;
 }
 
-
 .completed-ranking,
 .progress-ranking {
 
@@ -531,7 +504,6 @@ section {
 
     margin-bottom: 15px;
 }
-
 
 .completed-item {
 
@@ -548,14 +520,12 @@ section {
     text-align: left;
 }
 
-
 .completed-position {
 
     font-size: 20px;
 
     font-weight: bold;
 }
-
 
 .completed-name {
 
@@ -564,14 +534,12 @@ section {
     font-weight: bold;
 }
 
-
 .leader {
 
     background: #fff8d5;
 
     border-left-color: #f9a825;
 }
-
 
 .progress-item {
 
@@ -588,14 +556,12 @@ section {
     text-align: left;
 }
 
-
 .progress-name {
 
     font-weight: bold;
 
     font-size: 16px;
 }
-
 
 .progress-count {
 
@@ -624,14 +590,12 @@ section {
     border-radius: 10px;
 }
 
-
 .export-title {
 
     margin: 0 0 10px;
 
     font-size: 18px;
 }
-
 
 .export-buttons {
 
@@ -643,7 +607,6 @@ section {
     gap: 8px;
 }
 
-
 .export-button {
 
     min-height: 48px;
@@ -654,7 +617,6 @@ section {
 
     font-size: 14px;
 }
-
 
 .export-history {
     background: #1565c0;
@@ -678,7 +640,6 @@ section {
     padding: 0 8px 30px;
 }
 
-
 .history-item {
 
     background: white;
@@ -692,14 +653,12 @@ section {
     text-align: left;
 }
 
-
 .history-excluded {
 
-    opacity: 0.55;
+    opacity: 0.65;
 
     border-left: 5px solid #999;
 }
-
 
 .finish-position {
 
@@ -711,7 +670,6 @@ section {
 
     font-weight: bold;
 }
-
 
 .excluded-label {
 
@@ -734,14 +692,23 @@ section {
 
 
 /* =========================
-   履歴修正
+   履歴操作
 ========================= */
+
+.history-action-buttons {
+
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 8px;
+}
 
 .history-edit-button {
 
-    margin-top: 8px;
+    flex: 1;
 
-    padding: 7px 12px;
+    padding: 8px 10px;
 
     background: #1976d2;
 
@@ -750,6 +717,27 @@ section {
     font-size: 13px;
 }
 
+.history-delete-button {
+
+    flex: 1;
+
+    padding: 8px 10px;
+
+    background: #d32f2f;
+
+    color: white;
+
+    font-size: 13px;
+}
+
+.history-delete-button:active {
+    background: #b71c1c;
+}
+
+
+/* =========================
+   履歴修正
+========================= */
 
 .history-edit-area {
 
@@ -761,7 +749,6 @@ section {
 
     border-radius: 7px;
 }
-
 
 .history-edit-select {
 
@@ -778,7 +765,6 @@ section {
     border-radius: 6px;
 }
 
-
 .history-edit-controls {
 
     display: flex;
@@ -787,7 +773,6 @@ section {
 
     margin-top: 7px;
 }
-
 
 .history-save-button {
 
@@ -799,7 +784,6 @@ section {
 
     color: white;
 }
-
 
 .history-cancel-button {
 
@@ -857,7 +841,6 @@ section {
     .university-count {
         font-size: 15px;
     }
-
 }
 
 
@@ -880,7 +863,6 @@ section {
     .university-name {
         font-size: 15px;
     }
-
 }
 
 </style>
@@ -911,7 +893,7 @@ section {
 <header>
 
 <h1>
-箱根駅伝予選会 LIVE
+予選会集計ツール
 </h1>
 
 </header>
@@ -1164,6 +1146,16 @@ function showFeedback(
 
         box.classList.add(
             "feedback-assigned"
+        );
+
+    }
+
+    else if (
+        type === "delete"
+    ) {
+
+        box.classList.add(
+            "feedback-delete"
         );
 
     }
@@ -2384,7 +2376,7 @@ function showRanking() {
 
 
 // ========================================
-// 履歴
+// ゴール履歴
 // ========================================
 
 function showHistory() {
@@ -2485,7 +2477,9 @@ function showHistory() {
 
                 html +=
                     `
-                    <br>
+                    <div
+                        class="history-action-buttons"
+                    >
 
                     <button
                         class="history-edit-button"
@@ -2493,6 +2487,15 @@ function showHistory() {
                     >
                     ✏️ 大学を修正
                     </button>
+
+                    <button
+                        class="history-delete-button"
+                        onclick="deleteGoal(${item.id})"
+                    >
+                    🗑 削除
+                    </button>
+
+                    </div>
                     `;
 
             }
@@ -2578,6 +2581,132 @@ function showHistory() {
 
     area.innerHTML =
         html;
+
+}
+
+
+// ========================================
+// 履歴削除
+// ========================================
+
+function deleteGoal(
+    id
+) {
+
+    const item =
+        results.find(
+            result =>
+                result.id === id
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const sorted =
+        results
+            .slice()
+            .sort(
+                compareGoals
+            );
+
+
+    const overallPosition =
+        sorted.findIndex(
+            result =>
+                result.id === id
+        )
+        +
+        1;
+
+
+    const message =
+
+        overallPosition
+        +
+        "着\n"
+        +
+        item.university
+        +
+        "（大学"
+        +
+        item.count
+        +
+        "人目）\n"
+        +
+        "先頭との差：+"
+        +
+        formatTime(
+            item.time
+        )
+        +
+        "\n\nこの記録を削除しますか？";
+
+
+    if (
+        !confirm(
+            message
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const deletedUniversity =
+        item.university;
+
+
+    const deletedTime =
+        item.time;
+
+
+    results =
+        results.filter(
+            result =>
+                result.id !== id
+        );
+
+
+    if (
+        editingGoalId === id
+    ) {
+
+        editingGoalId =
+            null;
+
+    }
+
+
+    recalculateUniversityCounts();
+
+    saveData();
+
+    updateAllDisplays();
+
+
+    showFeedback(
+
+        "🗑 削除しました",
+
+        getShortName(
+            deletedUniversity
+        )
+        +
+        "　+"
+        +
+        formatTime(
+            deletedTime
+        ),
+
+        "delete"
+
+    );
 
 }
 
@@ -3192,7 +3321,7 @@ function createCSVFilename(
 
 
     return (
-        "箱根駅伝予選会_"
+        "予選会集計ツール_"
         +
         type
         +

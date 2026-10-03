@@ -1,6 +1,6 @@
 {
-  "name": "箱根駅伝予選会 LIVE",
-  "short_name": "箱根予選LIVE",
+  "name": "予選会集計ツール",
+  "short_name": "予選会集計",
   "description": "箱根駅伝予選会 リアルタイム順位計算",
   "start_url": "./index.html",
   "scope": "./",
