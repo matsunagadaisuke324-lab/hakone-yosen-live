@@ -13,13 +13,26 @@
 <title>箱根駅伝予選会 LIVE</title>
 
 <!-- 検索エンジンに掲載させない -->
-<meta name="robots" content="noindex, nofollow">
+<meta
+    name="robots"
+    content="noindex, nofollow"
+>
 
-<link rel="manifest" href="./manifest.webmanifest">
+<!-- PWA -->
+<link
+    rel="manifest"
+    href="./manifest.webmanifest"
+>
 
-<meta name="theme-color" content="#111111">
+<meta
+    name="theme-color"
+    content="#061f4a"
+>
 
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+>
 
 <meta
     name="apple-mobile-web-app-status-bar-style"
@@ -31,6 +44,13 @@
     content="箱根予選LIVE"
 >
 
+<!-- iPhoneホーム画面アイコン -->
+<link
+    rel="apple-touch-icon"
+    href="./icon-512.png"
+>
+
+
 <style>
 
 * {
@@ -39,23 +59,29 @@
 
 body {
     margin: 0;
+
     font-family:
         Arial,
         "Hiragino Kaku Gothic ProN",
         "Yu Gothic",
         sans-serif;
+
     background: #f4f4f4;
+
     text-align: center;
 }
 
 header {
-    background: #111;
+    background: #061f4a;
+
     color: white;
+
     padding: 8px;
 }
 
 header h1 {
     margin: 0;
+
     font-size: 18px;
 }
 
@@ -65,8 +91,11 @@ header h1 {
 ========================= */
 
 #inputFeedback {
+
     position: fixed;
+
     top: 10px;
+
     left: 50%;
 
     transform:
@@ -74,6 +103,7 @@ header h1 {
         translateY(-140px);
 
     width: calc(100% - 20px);
+
     max-width: 500px;
 
     padding: 14px;
@@ -99,13 +129,16 @@ header h1 {
         rgba(0,0,0,0.3);
 }
 
+
 #inputFeedback.show {
+
     transform:
         translateX(-50%)
         translateY(0);
 
     opacity: 1;
 }
+
 
 .feedback-university {
     background: #1976d2;
@@ -129,6 +162,7 @@ header h1 {
 
 .feedback-time {
     margin-top: 3px;
+
     font-size: 16px;
 }
 
@@ -143,17 +177,21 @@ header h1 {
 
 #timer {
     font-size: 38px;
+
     font-weight: bold;
 }
 
 #raceStatus {
     font-size: 13px;
+
     font-weight: bold;
+
     color: #1976d2;
 }
 
 #saveStatus {
     font-size: 11px;
+
     color: #777;
 }
 
@@ -163,10 +201,15 @@ header h1 {
 ========================= */
 
 button {
+
     cursor: pointer;
+
     border: none;
+
     border-radius: 7px;
+
     font-weight: bold;
+
     touch-action: manipulation;
 }
 
@@ -176,17 +219,27 @@ button {
 ========================= */
 
 .control-area {
+
     display: flex;
+
     justify-content: center;
+
     gap: 6px;
+
     padding: 5px 8px;
 }
 
+
 .control-button {
+
     flex: 1;
+
     max-width: 220px;
+
     padding: 8px 3px;
+
     color: white;
+
     font-size: 13px;
 }
 
@@ -204,8 +257,11 @@ button {
 ========================= */
 
 .main-input-area {
+
     max-width: 700px;
+
     margin: auto;
+
     padding: 4px 6px 8px;
 }
 
@@ -218,11 +274,15 @@ button {
     margin-bottom: 5px;
 }
 
+
 #goalCaptureButton {
+
     width: 100%;
+
     height: 62px;
 
     background: #ff9800;
+
     color: white;
 
     font-size: 28px;
@@ -230,18 +290,26 @@ button {
     border: 3px solid #e65100;
 }
 
+
 #goalCaptureButton:active {
     transform: scale(0.98);
 }
 
+
 #goalCaptureButton:disabled {
+
     background: #bdbdbd;
+
     border-color: #9e9e9e;
 }
 
+
 #pendingCount {
+
     margin-top: 2px;
+
     font-size: 14px;
+
     font-weight: bold;
 }
 
@@ -251,17 +319,21 @@ button {
 ========================= */
 
 #startGuide {
+
     margin: 4px 0;
+
     padding: 6px;
 
     background: #e3f2fd;
 
     border: 1px solid #1976d2;
+
     border-radius: 6px;
 
     color: #0d47a1;
 
     font-size: 12px;
+
     font-weight: bold;
 }
 
@@ -271,6 +343,7 @@ button {
 ========================= */
 
 .university-grid {
+
     display: grid;
 
     grid-template-columns:
@@ -279,8 +352,11 @@ button {
     gap: 4px;
 }
 
+
 .university {
+
     width: 100%;
+
     height: 56px;
 
     padding: 4px 2px;
@@ -292,13 +368,17 @@ button {
     color: #111;
 }
 
+
 .university:active {
+
     transform: scale(0.96);
 
     background: #e3f2fd;
 }
 
+
 .university-name {
+
     display: block;
 
     font-size: 12px;
@@ -306,7 +386,9 @@ button {
     white-space: nowrap;
 }
 
+
 .university-count {
+
     display: block;
 
     margin-top: 4px;
@@ -316,13 +398,17 @@ button {
     color: #555;
 }
 
+
 .university-warning {
+
     background: #fff3cd;
 
     border: 2px solid #f9a825;
 }
 
+
 .university-complete {
+
     background: #dff5e1;
 
     border: 2px solid #43a047;
@@ -334,12 +420,17 @@ button {
 ========================= */
 
 section {
+
     max-width: 900px;
+
     margin: auto;
 }
 
+
 .section-title {
+
     margin: 22px 10px 8px;
+
     font-size: 21px;
 }
 
@@ -352,12 +443,17 @@ section {
     padding: 0 8px;
 }
 
+
 #pendingGoalsList {
+
     max-width: 800px;
+
     margin: auto;
 }
 
+
 .pending-empty {
+
     color: #777;
 
     padding: 12px;
@@ -367,7 +463,9 @@ section {
     border-radius: 8px;
 }
 
+
 .pending-goal {
+
     background: #fff3e0;
 
     border: 2px solid #ff9800;
@@ -381,12 +479,17 @@ section {
     text-align: left;
 }
 
+
 .pending-goal-time {
+
     font-size: 19px;
+
     font-weight: bold;
 }
 
+
 .pending-select {
+
     width: 100%;
 
     margin-top: 6px;
@@ -408,13 +511,18 @@ section {
 ========================= */
 
 #rankingArea {
+
     max-width: 800px;
+
     margin: auto;
+
     padding: 0 8px;
 }
 
+
 .completed-ranking,
 .progress-ranking {
+
     background: white;
 
     border-radius: 10px;
@@ -424,7 +532,9 @@ section {
     margin-bottom: 15px;
 }
 
+
 .completed-item {
+
     background: #e8f5e9;
 
     border-left: 5px solid #43a047;
@@ -438,22 +548,33 @@ section {
     text-align: left;
 }
 
+
 .completed-position {
+
     font-size: 20px;
+
     font-weight: bold;
 }
+
 
 .completed-name {
+
     font-size: 17px;
+
     font-weight: bold;
 }
 
+
 .leader {
+
     background: #fff8d5;
+
     border-left-color: #f9a825;
 }
 
+
 .progress-item {
+
     background: #f5f5f5;
 
     border-left: 5px solid #90a4ae;
@@ -467,15 +588,21 @@ section {
     text-align: left;
 }
 
+
 .progress-name {
+
     font-weight: bold;
+
     font-size: 16px;
 }
 
+
 .progress-count {
+
     float: right;
 
     font-size: 18px;
+
     font-weight: bold;
 }
 
@@ -485,6 +612,7 @@ section {
 ========================= */
 
 .export-area {
+
     max-width: 800px;
 
     margin: 20px auto;
@@ -496,13 +624,17 @@ section {
     border-radius: 10px;
 }
 
+
 .export-title {
+
     margin: 0 0 10px;
 
     font-size: 18px;
 }
 
+
 .export-buttons {
+
     display: grid;
 
     grid-template-columns:
@@ -511,7 +643,9 @@ section {
     gap: 8px;
 }
 
+
 .export-button {
+
     min-height: 48px;
 
     padding: 8px;
@@ -520,6 +654,7 @@ section {
 
     font-size: 14px;
 }
+
 
 .export-history {
     background: #1565c0;
@@ -535,12 +670,17 @@ section {
 ========================= */
 
 #historyArea {
+
     max-width: 800px;
+
     margin: auto;
+
     padding: 0 8px 30px;
 }
 
+
 .history-item {
+
     background: white;
 
     padding: 10px;
@@ -552,22 +692,29 @@ section {
     text-align: left;
 }
 
+
 .history-excluded {
+
     opacity: 0.55;
 
     border-left: 5px solid #999;
 }
 
+
 .finish-position {
+
     display: inline-block;
 
     min-width: 50px;
 
     font-size: 17px;
+
     font-weight: bold;
 }
 
+
 .excluded-label {
+
     display: inline-block;
 
     margin-top: 5px;
@@ -581,6 +728,7 @@ section {
     border-radius: 5px;
 
     font-size: 12px;
+
     font-weight: bold;
 }
 
@@ -590,6 +738,7 @@ section {
 ========================= */
 
 .history-edit-button {
+
     margin-top: 8px;
 
     padding: 7px 12px;
@@ -601,7 +750,9 @@ section {
     font-size: 13px;
 }
 
+
 .history-edit-area {
+
     margin-top: 8px;
 
     padding: 8px;
@@ -611,7 +762,9 @@ section {
     border-radius: 7px;
 }
 
+
 .history-edit-select {
+
     width: 100%;
 
     padding: 10px;
@@ -625,7 +778,9 @@ section {
     border-radius: 6px;
 }
 
+
 .history-edit-controls {
+
     display: flex;
 
     gap: 7px;
@@ -633,7 +788,9 @@ section {
     margin-top: 7px;
 }
 
+
 .history-save-button {
+
     flex: 1;
 
     padding: 10px;
@@ -643,7 +800,9 @@ section {
     color: white;
 }
 
+
 .history-cancel-button {
+
     flex: 1;
 
     padding: 10px;
@@ -681,7 +840,9 @@ section {
     }
 
     #goalCaptureButton {
+
         height: 54px;
+
         font-size: 25px;
     }
 
@@ -707,6 +868,7 @@ section {
 @media (min-width: 800px) {
 
     .university-grid {
+
         grid-template-columns:
             repeat(5, 1fr);
     }
@@ -848,10 +1010,6 @@ section {
 </section>
 
 
-<!-- =========================
-     CSV
-========================= -->
-
 <section>
 
 <div class="export-area">
@@ -927,13 +1085,13 @@ const universities = [
 
 const universityNames =
     universities.map(
-        item => item.full
+        university =>
+            university.full
     );
 
 
 const STORAGE_KEY =
     "hakoneYosenLiveData";
-
 
 
 let raceStartTimestamp = null;
@@ -949,7 +1107,6 @@ let nextGoalId = 1;
 let editingGoalId = null;
 
 let feedbackTimer = null;
-
 
 
 // ========================================
@@ -1045,7 +1202,6 @@ function showFeedback(
 }
 
 
-
 // ========================================
 // 時間
 // ========================================
@@ -1070,7 +1226,6 @@ function getElapsedTime() {
 }
 
 
-
 function updateTimer() {
 
     if (
@@ -1090,7 +1245,6 @@ function updateTimer() {
         );
 
 }
-
 
 
 // ========================================
@@ -1152,7 +1306,6 @@ function updateRaceStatus() {
 }
 
 
-
 // ========================================
 // 大学入力
 // ========================================
@@ -1160,12 +1313,6 @@ function updateRaceStatus() {
 function finish(
     university
 ) {
-
-
-    /*
-       通常ボタンは10人でロック。
-       後から未割当を割り当てることは可能。
-    */
 
     if (
         getUniversityCount(
@@ -1178,12 +1325,9 @@ function finish(
     }
 
 
-    // 1着
-
     if (
         raceStartTimestamp === null
     ) {
-
 
         raceStartTimestamp =
             Date.now();
@@ -1218,14 +1362,17 @@ function finish(
 
 
         showFeedback(
+
             getShortName(
                 university
-            ) +
+            )
+            +
             " 1人目",
 
             "🏁 1着 +00:00.0",
 
             "university"
+
         );
 
 
@@ -1269,15 +1416,19 @@ function finish(
     ) {
 
         showFeedback(
-            "✅ " +
+
+            "✅ "
+            +
             getShortName(
                 university
-            ) +
+            )
+            +
             " 10人到達",
 
             "上位10人を集計",
 
             "complete"
+
         );
 
     }
@@ -1285,19 +1436,25 @@ function finish(
     else {
 
         showFeedback(
+
             getShortName(
                 university
-            ) +
-            " " +
-            record.count +
+            )
+            +
+            " "
+            +
+            record.count
+            +
             "人目",
 
-            "+" +
+            "+"
+            +
             formatTime(
                 elapsed
             ),
 
             "university"
+
         );
 
     }
@@ -1305,13 +1462,11 @@ function finish(
 }
 
 
-
 // ========================================
 // GOAL
 // ========================================
 
 function captureGoal() {
-
 
     if (
         raceStartTimestamp === null
@@ -1343,18 +1498,20 @@ function captureGoal() {
 
 
     showFeedback(
+
         "🟠 未割当",
 
-        "+" +
+        "+"
+        +
         formatTime(
             elapsed
         ),
 
         "pending"
+
     );
 
 }
-
 
 
 // ========================================
@@ -1363,12 +1520,13 @@ function captureGoal() {
 
 function updatePendingDisplay() {
 
-
     document.getElementById(
         "pendingCount"
     ).textContent =
-        "未割当：" +
-        pendingGoals.length +
+        "未割当："
+        +
+        pendingGoals.length
+        +
         "人";
 
 
@@ -1406,8 +1564,7 @@ function updatePendingDisplay() {
 
 
     sorted.forEach(
-        (goal, index) => {
-
+        (goal,index) => {
 
             const box =
                 document.createElement(
@@ -1430,9 +1587,12 @@ function updatePendingDisplay() {
 
 
             title.textContent =
-                "未割当 " +
-                (index + 1) +
-                "人目　+" +
+                "未割当 "
+                +
+                (index + 1)
+                +
+                "人目　+"
+                +
                 formatTime(
                     goal.time
                 );
@@ -1473,7 +1633,6 @@ function updatePendingDisplay() {
             universityNames.forEach(
                 university => {
 
-
                     const option =
                         document.createElement(
                             "option"
@@ -1491,9 +1650,12 @@ function updatePendingDisplay() {
 
 
                     option.textContent =
-                        university +
-                        "（現在" +
-                        count +
+                        university
+                        +
+                        "（現在"
+                        +
+                        count
+                        +
                         "人）";
 
 
@@ -1507,7 +1669,6 @@ function updatePendingDisplay() {
 
             select.onchange =
                 function () {
-
 
                     if (
                         !select.value
@@ -1541,16 +1702,14 @@ function updatePendingDisplay() {
 }
 
 
-
 // ========================================
-// 未割当を大学へ割当
+// 未割当割当
 // ========================================
 
 function assignPendingGoal(
     goalId,
     university
 ) {
-
 
     const index =
         pendingGoals.findIndex(
@@ -1569,9 +1728,7 @@ function assignPendingGoal(
 
 
     const goal =
-        pendingGoals[
-            index
-        ];
+        pendingGoals[index];
 
 
     const record = {
@@ -1611,18 +1768,25 @@ function assignPendingGoal(
     ) {
 
         showFeedback(
-            "✓ " +
+
+            "✓ "
+            +
             getShortName(
                 university
-            ) +
-            " " +
-            record.count +
+            )
+            +
+            " "
+            +
+            record.count
+            +
             "人目",
 
-            "+" +
+            "+"
+            +
             formatTime(
                 goal.time
-            ) +
+            )
+            +
             "　集計対象",
 
             record.count === 10
@@ -1630,6 +1794,7 @@ function assignPendingGoal(
                 "complete"
                 :
                 "assigned"
+
         );
 
     }
@@ -1637,22 +1802,26 @@ function assignPendingGoal(
     else {
 
         showFeedback(
+
             getShortName(
                 university
-            ) +
-            " " +
-            record.count +
+            )
+            +
+            " "
+            +
+            record.count
+            +
             "人目",
 
             "上位10人の集計対象外",
 
             "pending"
+
         );
 
     }
 
 }
-
 
 
 // ========================================
@@ -1679,7 +1848,6 @@ function getShortName(
 }
 
 
-
 // ========================================
 // 登録人数
 // ========================================
@@ -1695,7 +1863,6 @@ function getUniversityCount(
     ).length;
 
 }
-
 
 
 // ========================================
@@ -1727,13 +1894,11 @@ function compareGoals(
 }
 
 
-
 // ========================================
-// 大学内順位を再計算
+// 大学内順位
 // ========================================
 
 function recalculateUniversityCounts() {
-
 
     const sorted =
         results
@@ -1748,7 +1913,6 @@ function recalculateUniversityCounts() {
 
     sorted.forEach(
         item => {
-
 
             if (
                 !counts[
@@ -1783,13 +1947,11 @@ function recalculateUniversityCounts() {
 }
 
 
-
 // ========================================
 // 大学ボタン
 // ========================================
 
 function createUniversityButtons() {
-
 
     const area =
         document.getElementById(
@@ -1802,7 +1964,6 @@ function createUniversityButtons() {
 
     universities.forEach(
         university => {
-
 
             const count =
                 getUniversityCount(
@@ -1839,10 +2000,6 @@ function createUniversityButtons() {
                     "university-complete"
                 );
 
-
-                /*
-                   通常入力のみロック
-                */
 
                 button.disabled =
                     true;
@@ -1895,7 +2052,8 @@ function createUniversityButtons() {
             else {
 
                 countText.textContent =
-                    count +
+                    count
+                    +
                     "/10";
 
             }
@@ -1928,20 +2086,17 @@ function createUniversityButtons() {
 }
 
 
-
 // ========================================
 // 大学集計
 // ========================================
 
 function getUniversityData() {
 
-
     const data = {};
 
 
     universityNames.forEach(
         university => {
-
 
             data[
                 university
@@ -1964,7 +2119,6 @@ function getUniversityData() {
 
     results.forEach(
         item => {
-
 
             const team =
                 data[
@@ -2002,37 +2156,11 @@ function getUniversityData() {
 }
 
 
-
 // ========================================
-// ランキングデータ取得
-// ========================================
-
-function getCompletedRanking() {
-
-
-    return Object.entries(
-        getUniversityData()
-    )
-    .filter(
-        item =>
-            item[1].scoringCount === 10
-    )
-    .sort(
-        (a,b) =>
-            a[1].total -
-            b[1].total
-    );
-
-}
-
-
-
-// ========================================
-// ランキング表示
+// ランキング
 // ========================================
 
 function showRanking() {
-
 
     const area =
         document.getElementById(
@@ -2084,6 +2212,7 @@ function showRanking() {
 
                     }
 
+
                     return (
                         a[1].total -
                         b[1].total
@@ -2118,14 +2247,12 @@ function showRanking() {
 
     else {
 
-
         const leader =
             completed[0][1].total;
 
 
         completed.forEach(
             (entry,index) => {
-
 
                 const name =
                     entry[0];
@@ -2188,7 +2315,8 @@ function showRanking() {
                         ?
                         "0.0秒"
                         :
-                        "+" +
+                        "+"
+                        +
                         formatGap(
                             data.total -
                             leader
@@ -2223,7 +2351,6 @@ function showRanking() {
     progress.forEach(
         entry => {
 
-
             html +=
                 `
                 <div class="progress-item">
@@ -2256,13 +2383,11 @@ function showRanking() {
 }
 
 
-
 // ========================================
 // 履歴
 // ========================================
 
 function showHistory() {
-
 
     const area =
         document.getElementById(
@@ -2295,7 +2420,6 @@ function showHistory() {
 
     sorted.forEach(
         (item,index) => {
-
 
             html +=
                 `
@@ -2391,7 +2515,6 @@ function showHistory() {
                 universityNames.forEach(
                     university => {
 
-
                         html +=
                             `
                             <option
@@ -2459,7 +2582,6 @@ function showHistory() {
 }
 
 
-
 // ========================================
 // 履歴修正
 // ========================================
@@ -2475,7 +2597,6 @@ function startEditGoal(
 }
 
 
-
 function cancelGoalEdit() {
 
     editingGoalId = null;
@@ -2485,11 +2606,9 @@ function cancelGoalEdit() {
 }
 
 
-
 function saveGoalEdit(
     id
 ) {
-
 
     const item =
         results.find(
@@ -2507,7 +2626,8 @@ function saveGoalEdit(
 
     const select =
         document.getElementById(
-            "editUniversity-" +
+            "editUniversity-"
+            +
             id
         );
 
@@ -2532,6 +2652,7 @@ function saveGoalEdit(
 
 
     showFeedback(
+
         "✏️ 修正完了",
 
         getShortName(
@@ -2545,20 +2666,19 @@ function saveGoalEdit(
         ),
 
         "assigned"
+
     );
 
 }
 
 
-
 // ========================================
-// CSV共通
+// CSV
 // ========================================
 
 function escapeCSV(
     value
 ) {
-
 
     const text =
         String(
@@ -2567,23 +2687,23 @@ function escapeCSV(
 
 
     return (
-        '"' +
+        '"'
+        +
         text.replace(
             /"/g,
             '""'
-        ) +
+        )
+        +
         '"'
     );
 
 }
 
 
-
 function downloadCSV(
     filename,
     rows
 ) {
-
 
     const csv =
         rows
@@ -2598,11 +2718,6 @@ function downloadCSV(
             .join("\r\n");
 
 
-    /*
-       BOMを付けることで
-       Excelで日本語が文字化けしにくくする
-    */
-
     const bom =
         "\uFEFF";
 
@@ -2610,8 +2725,7 @@ function downloadCSV(
     const blob =
         new Blob(
             [
-                bom +
-                csv
+                bom + csv
             ],
             {
                 type:
@@ -2660,16 +2774,11 @@ function downloadCSV(
 }
 
 
-
-// ========================================
-// 全ゴール履歴CSV
-// ========================================
-
 function exportHistoryCSV() {
 
-
     if (
-        results.length === 0 &&
+        results.length === 0
+        &&
         pendingGoals.length === 0
     ) {
 
@@ -2699,11 +2808,6 @@ function exportHistoryCSV() {
 
     ];
 
-
-    /*
-       割当済み＋未割当を
-       実際のゴール時間順に統合
-    */
 
     const allGoals = [
 
@@ -2765,7 +2869,6 @@ function exportHistoryCSV() {
     allGoals.forEach(
         (item,index) => {
 
-
             rows.push([
 
                 index + 1,
@@ -2784,7 +2887,8 @@ function exportHistoryCSV() {
 
                 item.time.toFixed(1),
 
-                "+" +
+                "+"
+                +
                 formatTime(
                     item.time
                 ),
@@ -2810,29 +2914,30 @@ function exportHistoryCSV() {
 
 
     downloadCSV(
+
         createCSVFilename(
             "全ゴール履歴"
         ),
+
         rows
+
     );
 
 
     showFeedback(
+
         "📥 CSV保存",
+
         "全ゴール履歴を保存しました",
+
         "assigned"
+
     );
 
 }
 
 
-
-// ========================================
-// 大学順位CSV
-// ========================================
-
 function exportRankingCSV() {
-
 
     recalculateUniversityCounts();
 
@@ -2868,7 +2973,6 @@ function exportRankingCSV() {
         )
         .sort(
             (a,b) => {
-
 
                 if (
                     a[1].scoringCount !==
@@ -2926,7 +3030,6 @@ function exportRankingCSV() {
     completed.forEach(
         (entry,index) => {
 
-
             const university =
                 entry[0];
 
@@ -2970,14 +3073,8 @@ function exportRankingCSV() {
     );
 
 
-    /*
-       10人未満は順位確定扱いにせず
-       集計中として出力
-    */
-
     progress.forEach(
         entry => {
-
 
             const university =
                 entry[0];
@@ -3014,31 +3111,32 @@ function exportRankingCSV() {
 
 
     downloadCSV(
+
         createCSVFilename(
             "大学順位"
         ),
+
         rows
+
     );
 
 
     showFeedback(
+
         "📥 CSV保存",
+
         "大学順位を保存しました",
+
         "assigned"
+
     );
 
 }
 
 
-
-// ========================================
-// CSVファイル名
-// ========================================
-
 function createCSVFilename(
     type
 ) {
-
 
     const now =
         new Date();
@@ -3094,21 +3192,30 @@ function createCSVFilename(
 
 
     return (
-        "箱根駅伝予選会_" +
-        type +
-        "_" +
-        year +
-        month +
-        day +
-        "_" +
-        hour +
-        minute +
-        second +
+        "箱根駅伝予選会_"
+        +
+        type
+        +
+        "_"
+        +
+        year
+        +
+        month
+        +
+        day
+        +
+        "_"
+        +
+        hour
+        +
+        minute
+        +
+        second
+        +
         ".csv"
     );
 
 }
-
 
 
 // ========================================
@@ -3132,13 +3239,11 @@ function updateAllDisplays() {
 }
 
 
-
 // ========================================
 // 取り消し
 // ========================================
 
 function undoLast() {
-
 
     const all = [
 
@@ -3214,7 +3319,8 @@ function undoLast() {
 
 
     if (
-        results.length === 0 &&
+        results.length === 0
+        &&
         pendingGoals.length === 0
     ) {
 
@@ -3250,13 +3356,11 @@ function undoLast() {
 }
 
 
-
 // ========================================
 // 保存
 // ========================================
 
 function saveData() {
-
 
     const data = {
 
@@ -3273,19 +3377,22 @@ function saveData() {
 
     try {
 
-
         localStorage.setItem(
+
             STORAGE_KEY,
+
             JSON.stringify(
                 data
             )
+
         );
 
 
         document.getElementById(
             "saveStatus"
         ).textContent =
-            "保存済み " +
+            "保存済み "
+            +
             new Date()
                 .toLocaleTimeString();
 
@@ -3302,16 +3409,13 @@ function saveData() {
 }
 
 
-
 // ========================================
 // 読込
 // ========================================
 
 function loadData() {
 
-
     try {
-
 
         const saved =
             localStorage.getItem(
@@ -3379,13 +3483,11 @@ function loadData() {
 }
 
 
-
 // ========================================
 // リセット
 // ========================================
 
 function resetRace() {
-
 
     if (
         !confirm(
@@ -3439,7 +3541,6 @@ function resetRace() {
 }
 
 
-
 // ========================================
 // 時間表示
 // ========================================
@@ -3447,7 +3548,6 @@ function resetRace() {
 function formatTime(
     seconds
 ) {
-
 
     const minutes =
         Math.floor(
@@ -3480,11 +3580,9 @@ function formatTime(
 }
 
 
-
 function formatGap(
     seconds
 ) {
-
 
     if (
         seconds < 60
@@ -3516,7 +3614,6 @@ function formatGap(
 }
 
 
-
 // ========================================
 // 起動
 // ========================================
@@ -3541,33 +3638,43 @@ if (
 
 }
 
+
 // ========================================
 // Service Worker
 // ========================================
 
-if ("serviceWorker" in navigator) {
+if (
+    "serviceWorker"
+    in navigator
+) {
 
     window.addEventListener(
         "load",
         function () {
 
             navigator.serviceWorker
-                .register("./sw.js")
-                .then(function () {
+                .register(
+                    "./sw.js"
+                )
+                .then(
+                    function () {
 
-                    console.log(
-                        "Service Worker 登録成功"
-                    );
+                        console.log(
+                            "Service Worker 登録成功"
+                        );
 
-                })
-                .catch(function (error) {
+                    }
+                )
+                .catch(
+                    function (error) {
 
-                    console.error(
-                        "Service Worker 登録失敗",
-                        error
-                    );
+                        console.error(
+                            "Service Worker 登録失敗",
+                            error
+                        );
 
-                });
+                    }
+                );
 
         }
     );
